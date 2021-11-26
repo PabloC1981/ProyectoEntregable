@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Pablo",
+    "puesto": "Ventas",
+    "codigo vendedor": 10,
+    "status": "activo"
+  },
+  {
+    "id": 2,
+    "name": "Tomas",
+    "puesto": "Ventas",
+    "codigo vendedor": "15",
+    "status": "activo"
+  }
+]
