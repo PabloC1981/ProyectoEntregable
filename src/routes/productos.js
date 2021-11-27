@@ -1,6 +1,7 @@
 import express from 'express';
 import ContenedorProductos from '../classes/contenedorDeProductos.js';
 import upload from '../services/upload.js';
+import { io } from '../app.js';
 const router = express.Router();
 const contenedor = new ContenedorProductos()
 
@@ -21,7 +22,6 @@ router.get('/randomProductos', (req,res) => {
     })
 })
 router.post('/',upload.single('image'),(req,res)=>{
-    
     let producto = req.body;
     let file = req.file
     //producto.price = parseInt(producto.price)//para convertir en number y que no quede en string el valor
@@ -30,6 +30,12 @@ router.post('/',upload.single('image'),(req,res)=>{
     producto.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file.filename;
     contenedor.registerProductos(producto).then(result =>{
     res.send(result)
+    if(result.status==="success"){
+        contenedor.getAllProductos().then(result=>{
+            console.log(result);
+            io.emit('updateProd',result);
+        })
+    }
     })
 })
 router.put('/:pid',(req,res)=>{

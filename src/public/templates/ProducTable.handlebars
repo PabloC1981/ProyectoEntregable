@@ -1,0 +1,10 @@
+{{#if prod}}
+{{#each prod}}
+<div>
+    <p>
+        {{this.title}}
+    </p>
+    <img class="plantimg" src={{this.thumbnail}}>
+</div>
+{{/each}}
+{{/if}}

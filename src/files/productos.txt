@@ -34,5 +34,14 @@
     "stock": "10",
     "status": "En Stock",
     "thumbnail": "http://localhost:8080/images/1637873724225B-NSL.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Chomba",
+    "Colegio": " Nuestra Señora de Loreto",
+    "price": "1999",
+    "stock": "-10",
+    "status": "EN FALTA",
+    "thumbnail": "http://localhost:8080/images/1638019818547chomba-loreto.jpg"
   }
 ]

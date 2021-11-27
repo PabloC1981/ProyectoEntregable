@@ -5,23 +5,27 @@ import ContenedorProductos from './classes/contenedorDeProductos.js';
 import prodRouter from './routes/productos.js'
 import usersRouter from './routes/users.js'
 import upload from './services/upload.js';
+import __dirname from './utils.js';
+import { Server } from 'socket.io';
 
 
 const app = express();
-const PORT = process.env.PORT||8080
+const PORT = process.env.PORT|| 8080;
+
 const contenedor = new ContenedorProductos();
+
 const server = app.listen(PORT,()=>{
     console.log("Servidor escuchando en: 8080")
 })
-
+export const io = new Server(server);
 app.engine('handlebars',engine())//para definir el motor  la plantilla de HANDELBARS
-app.set('views','./views') //Cuando quiera renderizar los productos,a que carpeta accedo?/views
+app.set('views',__dirname+'/views') //Cuando quiera renderizar los productos,a que carpeta accedo?/views
 app.set('view engine','handlebars')//cuando se trabaje con un motor/acceder a handlerbas
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors());
-app.use(express.static('public'))
+app.use(express.static(__dirname+'/public'));
 app.use('/api/productos',prodRouter); 
 app.use('/api/users',usersRouter);
 
@@ -55,3 +59,10 @@ app.get('/view/productos',(req,res)=>{
     })
 })
 
+//socket
+io.on('connection', async socket=>{
+    console.log(`El socket ${socket.id} se ha conectado`)
+    let prods = await contenedor.getAllProductos();
+    socket.emit('updateProd',prods);
+
+})

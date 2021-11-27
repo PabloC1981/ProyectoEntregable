@@ -1,3 +1,19 @@
+const socket = io();
+//---------------------------IMPLEMENTACION DE EVENTOS DE SOCKET --------------------------------------
+socket.on('updateProd',data=>{
+    //console.log(data)
+    let prod = data.payload;
+    //console.log(prod)
+    fetch('templates/ProducTable.handlebars').then(string=>string.text()).then(template=>{
+        const processedTemplate = Handlebars.compile(template);
+        const templateObject={
+            prod:prod
+        }
+        const html = processedTemplate(templateObject);
+        let div = document.getElementById('prodTable');
+        div.innerHTML=html;
+    })
+})
 document.addEventListener('submit',enviarFormulario);
 
 function enviarFormulario(event){
@@ -16,7 +32,7 @@ function enviarFormulario(event){
             icon:'success',
             timer:2000,
         }).then(result=>{
-            location.href='/'
+            //location.href='/'
         })
     })
 }

@@ -1,15 +1,18 @@
 import fs from 'fs';
+import __dirname from '../utils.js';
+
+const prodURL = __dirname+'/files/productos.txt';
 
 class ContenedorProductos{
     async registerProductos(prod){
         try{
-            let data = await fs.promises.readFile('./files/productos.txt','utf-8');
+            let data = await fs.promises.readFile(prodURL,'utf-8');
             let prods = JSON.parse(data);
             let id = prods[prods.length-1].id+1;
             prod =Object.assign({id:id},prod);
             prods.push(prod)
             try{
-                await fs.promises.writeFile('./files/productos.txt',JSON.stringify(prods,null,2));
+                await fs.promises.writeFile(prodURL,JSON.stringify(prods,null,2));
                 return {status:"success",message:"Producto registrada"}
             }catch{
                 return {statis:"error",message:"No se pudo registrar a el producto"} 
@@ -17,7 +20,7 @@ class ContenedorProductos{
         }catch{
             prod = Object.assign({id:1},prod)
             try{
-                await fs.promises.writeFile('./files/productos.txt',JSON.stringify([prod],null,2));
+                await fs.promises.writeFile(prodURL,JSON.stringify([prod],null,2));
                 return {status:"success", message:"Producto registrado"}
             }
             catch{
@@ -51,7 +54,7 @@ class ContenedorProductos{
     }
     async getAllProductos(){
         try{
-            let data = await fs.promises.readFile('./files/productos.txt','utf-8');
+            let data = await fs.promises.readFile(prodURL,'utf-8');
             let prods = JSON.parse(data);
             return {status:"success",payload:prods}
         }catch{
@@ -69,7 +72,7 @@ class ContenedorProductos{
     }
     async getProductById(id){
         try{
-            let data = await fs.promises.readFile('./files/productos.txt','utf-8');
+            let data = await fs.promises.readFile(prodURL,'utf-8');
             let prods = JSON.parse(data);
             let prod = prods.find(v => v.id===id)
             if(prod){
@@ -126,9 +129,9 @@ class ContenedorProductos{
     }
     async updateProducto(id,body){
         try{
-            let data = await fs.promises.readFile('./files/productos.txt','utf-8');
+            let data = await fs.promises.readFile(prodURL,'utf-8');
             let prods = JSON.parse(data);
-            if(!prods.some(pt=>pt.id===id)) return {status:"error", message:"No hay mascotas con el id especificado"}
+            if(!prods.some(pt=>pt.id===id)) return {status:"error", message:"No hay productos con el id especificado"}
             let result = prods.map(prod=>{
                 if(prod.id===id){
                     if(prod){
@@ -144,10 +147,10 @@ class ContenedorProductos{
                 }
             })
             try{
-                await fs.promises.writeFile('./files/productos.txt',JSON.stringify(result,null,2));
-                return {status:"success", message:"Mascota actualizada"}
+                await fs.promises.writeFile(prodURL,JSON.stringify(result,null,2));
+                return {status:"success", message:"producto actualizada"}
             }catch{
-                return {status:"error", message:"Error al actualizar la pascota"}
+                return {status:"error", message:"Error al actualizar el producto"}
             }
         }catch(error){
             return {status:"error",message:"Fallo al actualizar el producto: "+error}
@@ -155,7 +158,7 @@ class ContenedorProductos{
     }
     async deleteProducto(id){
         try{
-            let data = await fs.promises.readFile('./files/productos.txt','utf-8');
+            let data = await fs.promises.readFile(prodURL,'utf-8');
             let prods = JSON.parse(data);
             if(!prods.some(prod=>prod.id===id)) return {status:"error", message:"No hay producto con el id especificado"}
             let prod = prods.find(v=>v.id===id);
@@ -175,7 +178,7 @@ class ContenedorProductos{
             }
             let aux = prods.filter(prod=>prod.id!==id);
             try{
-                await fs.promises.writeFile('./files/productos.txt',JSON.stringify(aux,null,2));
+                await fs.promises.writeFile(prodURL,JSON.stringify(aux,null,2));
                 return {status:"success",message:"Producto Eliminado"}
             }catch{
                 return {status:"error", message:"No se pudo eliminar el producto"}
@@ -192,7 +195,7 @@ class ContenedorProductos{
             let user = users.find(us=>us.id===id);
             if(user){
                 try{
-                    let prodData = await fs.promises.readFile('./files/productos.txt','utf-8');
+                    let prodData = await fs.promises.readFile(prodURL,'utf-8');
                     let prods = JSON.parse(prodData);
                     prods.forEach(prod=>{
                         if(prod.owner===id){
@@ -200,7 +203,7 @@ class ContenedorProductos{
                             delete prod['owner']
                         }
                     })
-                    await fs.promises.writeFile('./files/productos.txt',JSON.stringify(prods,null,2));
+                    await fs.promises.writeFile(prodURL,JSON.stringify(prods,null,2));
                 }catch{
                     return {status:"error", message:"fallo al eliminar el usuario"}
                 }
@@ -210,7 +213,7 @@ class ContenedorProductos{
                 await fs.promises.writeFile('./files/users.txt',JSON.stringify(aux,null,2));
                 return {status:"success",message:"Usuario eliminado"}
             }catch{
-                return {status:"error", message:"No se pudo eliminar la mascota"}
+                return {status:"error", message:"No se pudo eliminar la producto"}
             }
         }
         catch{
