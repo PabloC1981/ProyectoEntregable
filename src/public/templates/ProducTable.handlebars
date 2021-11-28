@@ -1,10 +1,12 @@
 {{#if prod}}
-{{#each prod}}
-<div>
-    <p>
-        {{this.title}}
-    </p>
-    <img class="plantimg" src={{this.thumbnail}}>
+
+<div class="producto-container">
+    {{#each prod}}
+    <div class="producto-card" >
+        <p>{{this.title}}</p>
+        <img  src={{this.thumbnail}}>
+    </div>
+    {{/each}}
 </div>
-{{/each}}
+
 {{/if}}
