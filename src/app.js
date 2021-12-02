@@ -66,3 +66,18 @@ io.on('connection', async socket=>{
     socket.emit('updateProd',prods);
 
 })
+
+//ChatLaboro
+let messages = [];
+
+
+io.on('connection',socket=>{
+    console.log('Cliente conectado')
+    socket.emit('messagelog',messages);
+    //socket.emit('welcome','Bienvenido a Lavoro',)
+    socket.on('message',data =>{
+        messages.push(data)
+        io.emit('messagelog',messages);
+    })
+
+})
