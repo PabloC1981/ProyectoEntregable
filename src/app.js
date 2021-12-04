@@ -7,6 +7,7 @@ import usersRouter from './routes/users.js'
 import upload from './services/upload.js';
 import __dirname from './utils.js';
 import { Server } from 'socket.io';
+import { authAdmin } from './utils.js';
 
 
 const app = express();
@@ -22,17 +23,20 @@ app.engine('handlebars',engine())//para definir el motor  la plantilla de HANDEL
 app.set('views',__dirname+'/views') //Cuando quiera renderizar los productos,a que carpeta accedo?/views
 app.set('view engine','handlebars')//cuando se trabaje con un motor/acceder a handlerbas
 
+const admin = true; //Contante buleana que simulará permiso de usuario para la ejecucion de tareas
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors());
+app.use((req,res,next)=>{
+    console.log(new Date().toTimeString().split(" ")[0], req.method, req.url);
+    req.auth=admin;
+    next();
+})
 app.use(express.static(__dirname+'/public'));
 app.use('/api/productos',prodRouter); 
 app.use('/api/users',usersRouter);
 
-app.use((req,res,next)=>{
-    console.log(new Date().toTimeString().split(" ")[0], req.method, req.url);
-    next();
-})
+
 //mIDDLEWARE PARA SUBIR Y VALIDAR SI NO SE SUBIO ARCHIVOS el single es para un unico archivo//si quiero acceder a mas archivos . array
 app.post('/api/uploadfile',upload.fields([
     {
@@ -49,7 +53,7 @@ app.post('/api/uploadfile',upload.fields([
     }
     res.send(files);
 })
-app.get('/view/productos',(req,res)=>{
+app.get('/view/productos',authAdmin,(req,res)=>{
     contenedor.getAllProductos().then(result=>{
         let info = result.payload; //recojo informacion para mostrar a la vista
         let preparedObject ={  //se prepara la informacion para mostrar

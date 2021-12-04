@@ -3,8 +3,13 @@
 <div class="producto-container">
     {{#each prod}}
     <div class="producto-card" >
-        <p>{{this.title}}</p>
+        <p>Producto:{{this.title}}</p>
+        <p>Precio:{{this.price}}</p>
+        <p>Status:{{this.status}}</p>
         <img  src={{this.thumbnail}}>
+        <div style="margin-top:30px; display:flex; justify-content: center;">
+                    <button type="submit" class="submit-button">COMPRAR</button>
+        </div>
     </div>
     {{/each}}
 </div>

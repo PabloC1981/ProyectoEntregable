@@ -53,7 +53,7 @@ input.addEventListener('keyup',(e)=>{
     if(e.key==="Enter"){
         if(e.target.value){
             socket.emit('message',{user:user.value,message:e.target.value});
-            
+            document.getElementById("mensaje").value="";
         } 
     }
 })

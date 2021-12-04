@@ -2,6 +2,7 @@ import fs from 'fs';
 import __dirname from '../utils.js';
 
 const prodURL = __dirname+'/files/productos.txt';
+const userURL = __dirname+'/files/users.txt';
 
 class ContenedorProductos{
     async registerProductos(prod){
@@ -30,13 +31,13 @@ class ContenedorProductos{
     }
     async registerUser(user){
         try{
-            let data = await fs.promises.readFile('./files/users.txt','utf-8');
+            let data = await fs.promises.readFile(userURL,'utf-8');
             let users = JSON.parse(data);
             let id = users[users.length-1].id+1;
             user = Object.assign({id:id},user);
             users.push(user);
             try{
-                await fs.promises.writeFile('./files/users.txt',JSON.stringify(users,null,2));
+                await fs.promises.writeFile(userURL,JSON.stringify(users,null,2));
                 return {status:"success",message:"Usuario registrado"}
             }catch{
                 return {statis:"error",message:"No se pudo registrar al usuario"} 
@@ -44,7 +45,7 @@ class ContenedorProductos{
         }catch{
             user = Object.assign({id:1},user)
             try{
-                await fs.promises.writeFile('./files/users.txt',JSON.stringify([user],null,2));
+                await fs.promises.writeFile(userURL,JSON.stringify([user],null,2));
                 return {status:"success", message:"Usuario registrado"}
             }
             catch{
@@ -63,7 +64,7 @@ class ContenedorProductos{
     }
     async getAllUsers(){
         try{
-            let data = await fs.promises.readFile('./files/users.txt','utf-8');
+            let data = await fs.promises.readFile(userURL,'utf-8');
             let users = JSON.parse(data);
             return {status:"success",payload:users}
         }catch{
@@ -86,7 +87,7 @@ class ContenedorProductos{
     }
     async getUserById(id){
         try{
-            let data = await fs.promises.readFile('./files/users.txt','utf-8');
+            let data = await fs.promises.readFile(userURL,'utf-8');
             let users = JSON.parse(data);
             let user = users.find(v => v.id===id)
             if(user){
@@ -100,7 +101,7 @@ class ContenedorProductos{
     }
     async updateUser(id,body){
         try{
-            let data = await fs.promises.readFile('./files/users.txt','utf-8');
+            let data = await fs.promises.readFile(userURL,'utf-8');
             let users = JSON.parse(data);
             if(!users.some(user=>user.id===id)) return {status:"error", message:"No hay ningún usuario con el id especificado"}
             let result = users.map(user=>{
@@ -118,7 +119,7 @@ class ContenedorProductos{
                 }
             })
             try{
-                await fs.promises.writeFile('./files/users.txt',JSON.stringify(result,null,2));
+                await fs.promises.writeFile(userURL,JSON.stringify(result,null,2));
                 return {status:"success", message:"Usuario actualizado"}
             }catch{
                 return {status:"error", message:"Error al actualizar el usuario"}
@@ -164,14 +165,14 @@ class ContenedorProductos{
             let prod = prods.find(v=>v.id===id);
             if(prod){
                 try{
-                    let userData = await fs.promises.readFile('./files/users.txt','utf-8');
+                    let userData = await fs.promises.readFile(userURL,'utf-8');
                     let users = JSON.parse(userData);
                     users.forEach(user=>{
                         if(user.prod===id){
                             delete user['prod']
                         }
                     })
-                    await fs.promises.writeFile('./files/users.txt',JSON.stringify(users,null,2));
+                    await fs.promises.writeFile(userURL,JSON.stringify(users,null,2));
                 }catch(error){
                     return {status:"error", message:"Fallo al eliminar el producto: "+error}
                 }
@@ -189,7 +190,7 @@ class ContenedorProductos{
     }  
     async deleteUser(id){
         try{
-            let data = await fs.promises.readFile('./files/users.txt','utf-8');
+            let data = await fs.promises.readFile(userURL,'utf-8');
             let users = JSON.parse(data);
             if(!users.some(us=>us.id===id)) return {status:"error", message:"No hay ningún usuario con el id proporcionado"}
             let user = users.find(us=>us.id===id);
@@ -210,7 +211,7 @@ class ContenedorProductos{
             }
             let aux = users.filter(user=>user.id!==id);
             try{
-                await fs.promises.writeFile('./files/users.txt',JSON.stringify(aux,null,2));
+                await fs.promises.writeFile(userURL,JSON.stringify(aux,null,2));
                 return {status:"success",message:"Usuario eliminado"}
             }catch{
                 return {status:"error", message:"No se pudo eliminar la producto"}
