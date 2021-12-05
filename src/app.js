@@ -2,6 +2,8 @@ import express from 'express';
 import {engine} from 'express-handlebars'; 
 import cors from 'cors';      
 import ContenedorProductos from './classes/contenedorDeProductos.js';
+import ContenedorCarrito from './classes/contenedorCarrito.js';
+import carritoRouter from './routes/carrito.js'
 import prodRouter from './routes/productos.js'
 import usersRouter from './routes/users.js'
 import upload from './services/upload.js';
@@ -14,6 +16,7 @@ const app = express();
 const PORT = process.env.PORT|| 8080;
 
 const contenedor = new ContenedorProductos();
+
 
 const server = app.listen(PORT,()=>{
     console.log("Servidor escuchando en: 8080")
@@ -35,7 +38,7 @@ app.use((req,res,next)=>{
 app.use(express.static(__dirname+'/public'));
 app.use('/api/productos',prodRouter); 
 app.use('/api/users',usersRouter);
-
+app.use('/api/carrito',carritoRouter);
 
 //mIDDLEWARE PARA SUBIR Y VALIDAR SI NO SE SUBIO ARCHIVOS el single es para un unico archivo//si quiero acceder a mas archivos . array
 app.post('/api/uploadfile',upload.fields([

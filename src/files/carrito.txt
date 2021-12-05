@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "title": "Pantalon",
+    "Codigo": " 01 -Jesus Maria",
+    "price": "2000",
+    "stock": "10",
+    "status": "En Stock"
+  },
+  {
+    "title": "Buzzo",
+    "Codigo": " 01 -Jesus Maria",
+    "price": "1500",
+    "stock": "10",
+    "status": "En Stock"
+  }
+]
