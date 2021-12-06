@@ -1,17 +1,26 @@
 [
   {
     "id": 1,
-    "title": "Pantalon",
+    "title": "Polleras",
     "Codigo": " 01 -Jesus Maria",
-    "price": "2000",
-    "stock": "10",
-    "status": "En Stock"
+    "price": "1999",
+    "stock": "8",
+    "status": "En stock"
   },
   {
+    "id": 2,
     "title": "Buzzo",
     "Codigo": " 01 -Jesus Maria",
-    "price": "1500",
-    "stock": "10",
-    "status": "En Stock"
+    "price": "1999",
+    "stock": "8",
+    "status": "En stock"
+  },
+  {
+    "id": 3,
+    "title": "Pantalos",
+    "Codigo": " 01 -Jesus Maria",
+    "price": "1999",
+    "stock": "-5",
+    "status": "En Falta"
   }
 ]

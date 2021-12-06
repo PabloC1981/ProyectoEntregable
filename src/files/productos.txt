@@ -1,29 +1,10 @@
 [
   {
-    "id": 1,
-    "title": "Pollera",
+    "id": 3,
+    "title": "Polleras",
     "Codigo": " 01 -Jesus Maria",
     "price": "1999",
-    "stock": "10",
-    "status": "En Stock",
-    "thumbnail": "http://localhost:8080/images/1637818418278JM3-min.jpg"
-  },
-  {
-    "id": 2,
-    "title": "Chomba",
-    "Codigo": "01 - Jesus Maria",
-    "price": "999",
-    "stock": "10",
-    "status": "En Stock",
-    "thumbnail": "http://localhost:8080/images/1637818465299Chomba-JM.jpg"
-  },
-  {
-    "id": 3,
-    "title": "buzo",
-    "Codigo": " 02 - Ntra Sra de Loreto",
-    "price": "2499",
-    "stock": "10",
-    "status": "En Stock",
-    "thumbnail": "http://localhost:8080/images/1637873724225B-NSL.jpg"
+    "stock": "8",
+    "status": "En stock"
   }
 ]

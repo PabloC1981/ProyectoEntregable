@@ -88,7 +88,46 @@ class ContenedorCarrito{
         }catch{
             return {status:"error", message:"Fallo al eliminar el Carrito"}
         }
-    }  
+    } 
+    async agregarProductoAlCarrito(id){
+        try{
+            let data = await fs.promises.readFile(prodURL,'utf-8');
+            let data1 = await fs.promises.readFile(carritoURL,'utf-8');
+            let carrs = JSON.parse(data1);
+            let prod = JSON.parse(data);
+            let carr = prod.filter(v=>v.id===id)
+            carrs.push(carr)
+            console.log(carrs)
+            try{
+                await fs.promises.writeFile(carritoURL,JSON.stringify(carrs,null,2));
+                return {status:"success", message:"carrito actualizado"}
+            }catch{
+                return {status:"error", message:"Error al actualizar el carrito"}
+            }
+        }catch(error){
+            return {status:"error",message:"Fallo al actualizar el carrito: "+error}
+        }
+    }
+    async deletecarritoYproducto(id){
+        try{
+            let data = await fs.promises.readFile(carritoURL,'utf-8');
+            let carrs = JSON.parse(data);
+            if(!carrs.some(carr=>carr.id===id)) return {status:"error", message:"No hay Venta con el id especificado"}
+            //let carr = carrs.find(v=>v.id===id);
+            
+            let aux = carrs.filter(carr=>carr.id!==id);
+            try{
+                await fs.promises.writeFile(carritoURL,JSON.stringify(aux,null,2));
+                await fs.promises.writeFile(prodURL,JSON.stringify(aux,null,2));
+                return {status:"success",message:"Carrito Eliminado"}
+            }catch{
+                return {status:"error", message:"No se pudo eliminar el Carrito"}
+            }
+        }catch{
+            return {status:"error", message:"Fallo al eliminar el Carrito"}
+        }
+    } 
+    
     
 }
 
