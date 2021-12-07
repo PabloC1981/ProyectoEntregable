@@ -162,21 +162,8 @@ class ContenedorProductos{
             let data = await fs.promises.readFile(prodURL,'utf-8');
             let prods = JSON.parse(data);
             if(!prods.some(prod=>prod.id===id)) return {status:"error", message:"No hay producto con el id especificado"}
-            let prod = prods.find(v=>v.id===id);
-            if(prod){
-                try{
-                    let userData = await fs.promises.readFile(userURL,'utf-8');
-                    let users = JSON.parse(userData);
-                    users.forEach(user=>{
-                        if(user.prod===id){
-                            delete user['prod']
-                        }
-                    })
-                    await fs.promises.writeFile(userURL,JSON.stringify(users,null,2));
-                }catch(error){
-                    return {status:"error", message:"Fallo al eliminar el producto: "+error}
-                }
-            }
+            //let prod = prods.find(v=>v.id===id);
+            
             let aux = prods.filter(prod=>prod.id!==id);
             try{
                 await fs.promises.writeFile(prodURL,JSON.stringify(aux,null,2));

@@ -1,7 +1,6 @@
 import express from 'express';
 import ContenedorCarrito from '../classes/contenedorCarrito.js';
 import upload from '../services/upload.js';
-import { io } from '../app.js';
 const router = express.Router();
 const contenedor = new ContenedorCarrito();
 //GET: '/:id/productos' - Me permite listar todos los productos guardados en el carrito
