@@ -35,6 +35,7 @@ app.use((req,res,next)=>{
     req.auth=admin;
     next();
 })
+
 app.use(express.static(__dirname+'/public'));
 app.use('/api/productos',prodRouter); 
 app.use('/api/users',usersRouter);
@@ -88,3 +89,6 @@ io.on('connection',socket=>{
     })
 
 })
+app.use(function(req, res){
+    res.status(404).send({ 404: "No encontrado" });
+});
