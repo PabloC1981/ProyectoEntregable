@@ -1,26 +1,9 @@
 [
   {
-    "id": 1,
-    "title": "Polleras",
-    "Codigo": " 01 -Jesus Maria",
-    "price": "1999",
-    "stock": "8",
-    "status": "En stock"
+    "id": 1
   },
   {
-    "id": 2,
-    "title": "Buzzo",
-    "Codigo": " 01 -Jesus Maria",
-    "price": "1999",
-    "stock": "8",
-    "status": "En stock"
+    "id": 2
   },
-  {
-    "id": 3,
-    "title": "Pantalos",
-    "Codigo": " 01 -Jesus Maria",
-    "price": "1999",
-    "stock": "-5",
-    "status": "En Falta"
-  }
+  []
 ]

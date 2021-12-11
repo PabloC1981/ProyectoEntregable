@@ -33,11 +33,15 @@ class ContenedorCarrito{
             }
         }
     }
-    async getAllProductosCarrito(){
+    async getAllProductosCarrito(id){
         try{
             let data = await fs.promises.readFile(carritoURL,'utf-8');
             let carrs = JSON.parse(data);
-            return {status:"success",payload:carrs}
+            let aux = carrs.filter(carr=>carr.id==id)
+            if(!carrs.some(carr=>carr.id===id)){ 
+                return {status:"error", message:"No hay Venta con el id especificado"}
+            }else
+            return {status:"success",payload:aux}
         }catch{
             return {status:"error",message:"Error al obtener los productos. Intente más tarde"}
         }
@@ -63,21 +67,7 @@ class ContenedorCarrito{
             let data = await fs.promises.readFile(carritoURL,'utf-8');
             let carrs = JSON.parse(data);
             if(!carrs.some(carr=>carr.id===id)) return {status:"error", message:"No hay Venta con el id especificado"}
-            let carr = carrs.find(v=>v.id===id);
-            if(carr){
-                try{
-                    let userData = await fs.promises.readFile(userURL,'utf-8');
-                    let users = JSON.parse(userData);
-                    users.forEach(user=>{
-                        if(user.carr===id){
-                            delete user['carr']
-                        }
-                    })
-                    await fs.promises.writeFile(userURL,JSON.stringify(users,null,2));
-                }catch(error){
-                    return {status:"error", message:"Fallo al eliminar el Carrito: "+error}
-                }
-            }
+
             let aux = carrs.filter(carr=>carr.id!==id);
             try{
                 await fs.promises.writeFile(carritoURL,JSON.stringify(aux,null,2));
@@ -89,14 +79,16 @@ class ContenedorCarrito{
             return {status:"error", message:"Fallo al eliminar el Carrito"}
         }
     } 
-    async agregarProductoAlCarrito(id){
+    async agregarProductoAlCarrito(id,body){
         try{
             let data = await fs.promises.readFile(prodURL,'utf-8');
             let data1 = await fs.promises.readFile(carritoURL,'utf-8');
             let carrs = JSON.parse(data1);
-            let prod = JSON.parse(data);
-            let carr = prod.filter(v=>v.id===id)
-            carrs.push(carr)
+            let prods = JSON.parse(data);
+            if(!carrs.some(cr=>cr.id===id)) return {status:"error", message:"No hay carritos con el id especificado"}
+            let prod = prods.filter(v=>v.id===body)
+            console.log(prod)
+            carrs.push(prod)
             console.log(carrs)
             try{
                 await fs.promises.writeFile(carritoURL,JSON.stringify(carrs,null,2));

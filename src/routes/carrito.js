@@ -4,16 +4,15 @@ import upload from '../services/upload.js';
 const router = express.Router();
 const contenedor = new ContenedorCarrito();
 //GET: '/:id/productos' - Me permite listar todos los productos guardados en el carrito
-router.get('/', (req,res)=>{
-    contenedor.getAllProductosCarrito().then(result=>{   
+router.get('/:id/productos', (req,res)=>{
+    let cid= parseInt(req.params.id)
+    contenedor.getAllProductosCarrito(cid).then(result=>{   
     res.send(result);
     })
 })
 //POST: '/' - Crea un carrito y devuelve su id.
-router.post('/',upload.single('image'),(req,res)=>{
-    let id = req.body;
-    console.log(id)
-    contenedor.registerCarrito(id).then(result =>{
+router.post('/',(req,res)=>{
+    contenedor.registerCarrito().then(result =>{
     res.send(result)
     
     })
@@ -27,9 +26,10 @@ router.delete('/:id',(req,res)=>{
 })
 //POST: '/:id/productos' - Para incorporar productos al carrito por su id de producto
 router.post('/:id/productos',upload.single('image'),(req,res)=>{
-    let id = parseInt(req.params.id);
-    console.log(id)
-    contenedor.agregarProductoAlCarrito(id).then(result =>{
+    let cid= parseInt(req.params.id);
+    let idp = parseInt(req.body);
+    console.log(idp)
+    contenedor.agregarProductoAlCarrito(cid,idp).then(result =>{
     res.send(result)
     })
 })
