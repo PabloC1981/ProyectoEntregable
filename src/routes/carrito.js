@@ -25,11 +25,10 @@ router.delete('/:id',(req,res)=>{
     })
 })
 //POST: '/:id/productos' - Para incorporar productos al carrito por su id de producto
-router.post('/:id/productos',upload.single('image'),(req,res)=>{
+router.post('/:id/productos',(req,res)=>{
     let cid= parseInt(req.params.id);
-    let idp = parseInt(req.body);
-    console.log(idp)
-    contenedor.agregarProductoAlCarrito(cid,idp).then(result =>{
+    console.log("viene algo", req.body)
+    contenedor.agregarProductoAlCarrito(cid,req.body).then(result =>{
     res.send(result)
     })
 })
