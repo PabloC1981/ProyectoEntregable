@@ -80,7 +80,6 @@ class ContenedorCarrito{
     async agregarProductoAlCarrito(id,body){
         
         try{
-            console.log("viene", body)
             let dataprod = await fs.promises.readFile(prodURL,'utf-8');
             let datacarrito = await fs.promises.readFile(carritoURL,'utf-8');
             let carrs = JSON.parse(datacarrito);
@@ -92,20 +91,17 @@ class ContenedorCarrito{
                 let carro = carrs.filter(v=>v.id===id)
                 if (!carro[0].productos.some(v=>v.id===body.id)){
                     let prod = prods.filter(v=>v.id===body.id)
-                    console.log(prod)
                     let carro_add = {
                         "id": body.id,
                         "title": prod[0].title,
                         "price": prod[0].price,
                         "cantidad":body.cantidad
                     }
-                    console.log("Detalle",carro_add)
                     carro[0].productos.push(carro_add)
-                    console.log("Llenando carro",carro)
                     //carrs.push(carro[0])
                 }else{
                     let detalle = carro[0].productos.filter(v=>v.id===body.id)
-                    detalle[0].cantidad =eval( eval(detalle[0].cantidad) + eval(body.cantidad))
+                    detalle[0].cantidad =eval(eval(detalle[0].cantidad) + eval(body.cantidad))
                     //carro[0].productos.push(detalle[0])
                 }
                 
@@ -121,27 +117,35 @@ class ContenedorCarrito{
             return {status:"error",message:"Fallo al actualizar el carrito: "+error}
         }
     }
-    async deletecarritoYproducto(id){
+    async deleteProductodeCarrito(idcarrito,idprod){
         try{
             let data = await fs.promises.readFile(carritoURL,'utf-8');
             let carrs = JSON.parse(data);
-            if(!carrs.some(carr=>carr.id===id)) return {status:"error", message:"No hay Venta con el id especificado"}
+            if(!carrs.some(carr=>carr.id===idcarrito)){
+                return {status:"error", message:"No hay Venta con el id especificado"}
             //let carr = carrs.find(v=>v.id===id);
-            
-            let aux = carrs.filter(carr=>carr.id!==id);
-            try{
-                await fs.promises.writeFile(carritoURL,JSON.stringify(aux,null,2));
-                await fs.promises.writeFile(prodURL,JSON.stringify(aux,null,2));
-                return {status:"success",message:"Carrito Eliminado"}
-            }catch{
-                return {status:"error", message:"No se pudo eliminar el Carrito"}
-            }
+            }else{                
+                let carro = carrs.filter(carr=>carr.id===idcarrito);
+                if(!carro[0].productos.some(carr=>carr.id===idprod)){
+                    return {status:"error", message:"El producto no Existe en el Carro"}
+                }else{
+                let aux = carro[0].productos.filter(prod=>prod.id!==idprod)
+                carro[0].productos = aux
+
+                    try{
+                        await fs.promises.writeFile(carritoURL,JSON.stringify(carrs,null,2));
+                        return {status:"success",message:"Producto Eliminado"}
+                    }catch{
+                        return {status:"error", message:"No se pudo eliminar el Carrito"}
+                    }
+                }
+        }
         }catch{
             return {status:"error", message:"Fallo al eliminar el Carrito"}
         }
-    } 
+    }
     
-    
-}
+} 
+
 
 export default ContenedorCarrito;

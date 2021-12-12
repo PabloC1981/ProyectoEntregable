@@ -27,7 +27,7 @@ router.delete('/:id',(req,res)=>{
 //POST: '/:id/productos' - Para incorporar productos al carrito por su id de producto
 router.post('/:id/productos',(req,res)=>{
     let cid= parseInt(req.params.id);
-    console.log("viene algo", req.body)
+    //console.log("viene algo", req.body)
     contenedor.agregarProductoAlCarrito(cid,req.body).then(result =>{
     res.send(result)
     })
@@ -35,10 +35,13 @@ router.post('/:id/productos',(req,res)=>{
 /*DELETE: '/:id/productos/:id_prod' - Eliminar un producto del carrito por su id de carrito y de 
 producto*/
 router.delete('/:id/productos/:id_prod',(req,res)=>{
-    let id= parseInt(req.params.id);
-    contenedor.deletecarritoYproducto(id).then(result=>{
+    let idcarrito= parseInt(req.params.id);
+    let idproducto= parseInt(req.params.id_prod)
+    contenedor.deleteProductodeCarrito(idcarrito,idproducto).then(result=>{
         res.send(result)
+    
     })
 })
+
 export default router;
 
