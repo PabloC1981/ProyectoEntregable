@@ -131,7 +131,7 @@ class ContenedorCarrito{
                 }else{
                 let aux = carro[0].productos.filter(prod=>prod.id!==idprod)
                 carro[0].productos = aux
-
+                    //
                     try{
                         await fs.promises.writeFile(carritoURL,JSON.stringify(carrs,null,2));
                         return {status:"success",message:"Producto Eliminado"}
