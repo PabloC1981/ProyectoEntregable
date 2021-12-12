@@ -1,28 +1,28 @@
 [
   {
     "id": 1,
+    "productos": [
+      {
+        "id": 2,
+        "title": "Buzo",
+        "price": "1599",
+        "cantidad": "3"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "productos": [
+      {
+        "id": 1,
+        "title": "Pollera",
+        "price": "1599",
+        "cantidad": 6
+      }
+    ]
+  },
+  {
+    "id": 3,
     "productos": []
-  },
-  {
-    "id": 2,
-    "productos": [
-      {
-        "id": 1,
-        "title": "Pollera",
-        "price": "1599",
-        "cantidad": "2"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "productos": [
-      {
-        "id": 1,
-        "title": "Pollera",
-        "price": "1599",
-        "cantidad": "2"
-      }
-    ]
   }
 ]

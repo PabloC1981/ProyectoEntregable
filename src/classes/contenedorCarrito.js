@@ -86,21 +86,29 @@ class ContenedorCarrito{
             let carrs = JSON.parse(datacarrito);
             let prods = JSON.parse(dataprod);
             if(!carrs.some(cr=>cr.id===id)){
-             return {status:"error", message:"No hay carritos con el id especificado"}
+            return {status:"error", message:"No hay carritos con el id especificado"}
             }else{
-                let prod = prods.filter(v=>v.id===body.id)
+                
                 let carro = carrs.filter(v=>v.id===id)
-                console.log(prod)
-                let carro_add = {
-                    "id": body.id,
-                    "title": prod[0].title,
-                    "price": prod[0].price,
-                    "cantidad":body.cantidad
+                if (!carro[0].productos.some(v=>v.id===body.id)){
+                    let prod = prods.filter(v=>v.id===body.id)
+                    console.log(prod)
+                    let carro_add = {
+                        "id": body.id,
+                        "title": prod[0].title,
+                        "price": prod[0].price,
+                        "cantidad":body.cantidad
+                    }
+                    console.log("Detalle",carro_add)
+                    carro[0].productos.push(carro_add)
+                    console.log("Llenando carro",carro)
+                    //carrs.push(carro[0])
+                }else{
+                    let detalle = carro[0].productos.filter(v=>v.id===body.id)
+                    detalle[0].cantidad =eval( eval(detalle[0].cantidad) + eval(body.cantidad))
+                    //carro[0].productos.push(detalle[0])
                 }
-                console.log("Detalle",carro_add)
-                carro[0].productos.push(carro_add)
-                console.log("Llenando carro",carro)
-                carrs.push(carro[0])
+                
                 try{
                     await fs.promises.writeFile(carritoURL,JSON.stringify(carrs,null,2));
                     return {status:"success", message:"carrito actualizado"}
