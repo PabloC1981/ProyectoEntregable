@@ -2,52 +2,41 @@ import express from 'express';
 import ContenedorProductos from '../classes/contenedorDeProductos.js';
 import upload from '../services/upload.js';
 import { io } from '../app.js';
+import Products from '../services/Products.js';
+
 const router = express.Router();
-const contenedor = new ContenedorProductos()
+const contenedor = new ContenedorProductos();
+const productsService = new Products();
 
 router.get('/', (req,res)=>{
-    contenedor.getAllProductos().then(result=>{   
+     productsService.getProducts().then(result=>{   
     res.send(result);
     })
 })
 router.get('/:pid', (req,res)=>{
     let id = parseInt(req.params.pid)
-    contenedor.getProductById(id).then(result=>{
+    productsService.getProductById(id).then(result=>{
     res.send(result);
     })
 })
-router.get('/randomProductos', (req,res) => {
-    contenedor.getAllRandomProductos().then(result=>{
-        res.send(result);
-    })
-})
-router.post('/',upload.single('image'),(req,res)=>{
+router.post('/',(req,res)=>{
     let producto = req.body;
-    let file = req.file
-    //producto.price = parseInt(producto.price)//para convertir en number y que no quede en string el valor
-    //producto.stock = parseInt(producto.stock)//para convertir en number y que no quede en string el valor
-    console.log(producto)
-    producto.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file.filename;
-    contenedor.registerProductos(producto).then(result =>{
+    console.log(producto);
+    productsService.registerProduct(producto).then(result =>{
     res.send(result)
-    if(result.status==="success"){
-        contenedor.getAllProductos().then(result=>{
-            console.log(result);
-            io.emit('updateProd',result);
-        })
-    }
+    
     })
 })
-router.put('/:pid',(req,res)=>{
+router.put('/:id',(req,res)=>{
     let body = req.body;
-    let id= parseInt(req.params.pid)
-    contenedor.updateProducto(id,body).then(result=>{
+    let id= parseInt(req.params.id)
+    productsService.updateProducto(id,body).then(result=>{
     res.send(result)
     })
 })
-router.delete('/:pid',(req,res)=>{
-    let id= parseInt(req.params.pid)
-    contenedor.deleteProducto(id).then(result=>{
+router.delete('/:id',(req,res)=>{
+    let id = parseInt(req.params.id)
+    productsService.deleteProducto(id).then(result=>{
         res.send(result)
     })
 })

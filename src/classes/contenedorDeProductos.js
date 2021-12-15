@@ -1,5 +1,7 @@
 import fs from 'fs';
+import database from '../config.js';
 import __dirname from '../utils.js';
+
 
 const prodURL = __dirname+'/files/productos.txt';
 const userURL = __dirname+'/files/users.txt';
@@ -208,6 +210,7 @@ class ContenedorProductos{
             return {status:"error",message:"Fallo al eliminar el usuario"}
         }
     }
+    
 }
 
 export default ContenedorProductos;
