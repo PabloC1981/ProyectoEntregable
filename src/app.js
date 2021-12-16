@@ -7,16 +7,18 @@ import carritoRouter from './routes/carrito.js'
 import prodRouter from './routes/productos.js'
 import usersRouter from './routes/users.js'
 import upload from './services/upload.js';
+import Message from './services/MessageSocket.js';
 import __dirname from './utils.js';
 import { Server } from 'socket.io';
 import { authAdmin } from './utils.js';
+
 
 
 const app = express();
 const PORT = process.env.PORT|| 8080;
 
 const contenedor = new ContenedorProductos();
-
+const messageService = new Message();
 
 const server = app.listen(PORT,()=>{
     console.log("Servidor escuchando en: 8080")
@@ -76,18 +78,29 @@ io.on('connection', async socket=>{
 })
 
 //ChatLaboro
-let messages = [];
+let messages = await messageService.getMessages();
 
 
 io.on('connection',socket=>{
     console.log('Cliente conectado')
     socket.emit('messagelog',messages);
     //socket.emit('welcome','Bienvenido a Lavoro',)
-    socket.on('message',data =>{
-        messages.push(data)
+    socket.on('message',async data =>{
+        messages.saveMessage(data)
         io.emit('messagelog',messages);
     })
 
+})
+app.post('/api/message',(req,res)=>{
+    let message = req.body
+    messageService.saveMessage(message).then(data=> {
+        res.send(data)
+    })
+})    
+app.get('/api/message',(req,res)=>{
+    messageService.getMessages().then(data=> {
+         res.send(data);
+    })
 })
 app.use(function(req, res){
     res.status(404).send({ 404: "No encontrado" });

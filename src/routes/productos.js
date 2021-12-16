@@ -20,6 +20,7 @@ router.get('/:pid', (req,res)=>{
     })
 })
 router.post('/',(req,res)=>{
+    
     let producto = req.body;
     console.log(producto);
     productsService.registerProduct(producto).then(result =>{

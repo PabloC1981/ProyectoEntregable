@@ -10,6 +10,7 @@ export default class Products{
                     table.string('codigo').notNullable();
                     table.integer('price').notNullable();
                     table.integer('stock').notNullable();
+                    table.string('status').notNullable();
                     table.string('thumbnail');
                     table.timestamps(true,true); //registro del momento que se ha realizado alguna tarea
                 }).then(result=>{
@@ -68,7 +69,7 @@ export default class Products{
         try{ 
             let result = await database.table('products').select().del().where('id', id)
             console.log(result);
-            return {status:"success",payload:'Producto no encontrado'}
+            return {status:"success",payload:result}
         }catch(error){
             console.log(error);
             return {status:"error", message:error}

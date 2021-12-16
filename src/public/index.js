@@ -20,9 +20,18 @@ function enviarFormulario(event){
     event.preventDefault();
     let form= document.getElementById('productoForm');
     let data = new FormData(form);
+    console.log(data)
+    let product = [{
+        name: data.title,
+        codigo:data.Codigo,
+        price: data.price,
+        stock:data.sotck,
+        status:data.status,
+        image:data.image
+    }]
     fetch('/api/productos',{
         method:'POST',
-        body: data,
+        body: parseInt(product),
     }).then(result=>{
         return result.json();
     }).then(json=>{
