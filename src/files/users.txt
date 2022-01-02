@@ -12,5 +12,19 @@
     "puesto": "Ventas",
     "codigo vendedor": "15",
     "status": "activo"
+  },
+  {
+    "id": 3,
+    "name": "Ezequiel",
+    "puesto": "Ventas",
+    "codigo vendedor": "15",
+    "status": "activo"
+  },
+  {
+    "id": 5,
+    "name": "Ezequiel",
+    "puesto": "Ventas",
+    "codigo vendedor": "15",
+    "status": "activo"
   }
 ]

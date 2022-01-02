@@ -79,7 +79,7 @@ class ContenedorProductos{
             if(prod){
                 return {status:"success", payload:prod}
             }else{
-                return {status:"error",message:"Producto no encontrada"}
+                return {status:"error",message:"Producto no encontrado"}
             }
         }catch{
             return {status:"error",message:"Error al obtener el producto"}

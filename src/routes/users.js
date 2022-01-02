@@ -1,6 +1,8 @@
 import express from 'express';
 const router = express.Router();
-import ContenedorProductos from '../classes/contenedorDeProductos.js';
+import ContenedorProductos from '../contenedores/contenedorDeProductos.js';
+import { users } from '../daos/index.js';
+
 const contenedor = new ContenedorProductos()
 
 router.use((req,res,next)=>{
@@ -10,32 +12,32 @@ router.use((req,res,next)=>{
     next()
 })    
 router.get('/',(req,res)=>{
-    contenedor.getAllUsers().then(result =>{
+    users.getAll().then(result =>{
         res.send(result)
     })
 })
 router.get('/:uid',(req,res)=>{
     let id= parseInt(req.params.uid);
-    contenedor.getUserById(id).then(result=>{
+    users.getById(id).then(result=>{
         res.send(result);
     })
 })            
 router.put('/:uid',(req,res)=>{
     let id= parseInt(req.params.uid)
     let body = req.body;
-    contenedor.updateUser(id,body).then(result=>{
+    users.update(id,body).then(result=>{
     res.send(result)
     })
 })  
 router.post('/',(req,res)=>{
     let user = req.body;
-    contenedor.registerUser(user).then(result =>{
+    users.register(user).then(result =>{
         res.send(result)
     })
 })
 router.delete('/:uid',(req,res)=>{
     let id= parseInt(req.params.uid)
-    contenedor.deleteUser(id).then(result=>{
+    users.delete(id).then(result=>{
         res.send(result)
     })
 })

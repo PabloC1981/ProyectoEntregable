@@ -7,7 +7,7 @@ const carritoURL = __dirname+'/files/carrito.txt';
 
 class ContenedorCarrito{
 
-    async registerCarrito(car){
+    /*async registerCarrito(car){
         try{
             let data = await fs.promises.readFile(carritoURL,'utf-8');
             let carrs = JSON.parse(data);
@@ -30,21 +30,21 @@ class ContenedorCarrito{
                 return {status:"error",message:"No se pudo registrar el carrito"}
             }
         }
-    }
-    async getAllProductosCarrito(id){
-        try{
-            let data = await fs.promises.readFile(carritoURL,'utf-8');
-            let carrs = JSON.parse(data);
-            let aux = carrs.filter(carr=>carr.id==id)
-            if(!carrs.some(carr=>carr.id===id)){ 
-                return {status:"error", message:"No hay Venta con el id especificado"}
-            }else
-            return {status:"success",payload:aux}
-        }catch{
-            return {status:"error",message:"Error al obtener los productos. Intente más tarde"}
-        }
-    }
-    async updateCarrito(body){
+    }*/
+    // async getAllProductosCarrito(id){
+    //     try{
+    //         let data = await fs.promises.readFile(carritoURL,'utf-8');
+    //         let carrs = JSON.parse(data);
+    //         let aux = carrs.filter(carr=>carr.id==id)
+    //         if(!carrs.some(carr=>carr.id===id)){ 
+    //             return {status:"error", message:"No hay Venta con el id especificado"}
+    //         }else
+    //         return {status:"success",payload:aux}
+    //     }catch{
+    //         return {status:"error",message:"Error al obtener los productos. Intente más tarde"}
+    //     }
+    // }
+    /*async updateCarrito(body){
         try{
             let data = await fs.promises.readFile(carritoURL,'utf-8');
             let carrs = JSON.parse(data);
@@ -59,8 +59,8 @@ class ContenedorCarrito{
         }catch(error){
             return {status:"error",message:"Fallo al actualizar el carrito: "+error}
         }
-    }
-    async deletecarrito(id){
+    }*/
+    /*async deletecarrito(id){
         try{
             let data = await fs.promises.readFile(carritoURL,'utf-8');
             let carrs = JSON.parse(data);
@@ -76,7 +76,7 @@ class ContenedorCarrito{
         }catch{
             return {status:"error", message:"Fallo al eliminar el Carrito"}
         }
-    } 
+    } */
     async agregarProductoAlCarrito(id,body){
         
         try{
@@ -117,7 +117,7 @@ class ContenedorCarrito{
             return {status:"error",message:"Fallo al actualizar el carrito: "+error}
         }
     }
-    async deleteProductodeCarrito(idcarrito,idprod){
+    /*async deleteProductodeCarrito(idcarrito,idprod){
         try{
             let data = await fs.promises.readFile(carritoURL,'utf-8');
             let carrs = JSON.parse(data);
@@ -143,7 +143,7 @@ class ContenedorCarrito{
         }catch{
             return {status:"error", message:"Fallo al eliminar el Carrito"}
         }
-    }
+    }*/
     
 } 
 

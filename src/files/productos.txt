@@ -1,38 +1,38 @@
 [
   {
     "id": 1,
-    "title": "Pollera",
-    "Colegio": " Jesus Maria",
-    "price": "1599",
+    "title": "Chomba",
+    "Codigo": "02 - Nuestra Señora de Loreto",
+    "price": "1999",
     "stock": "10",
-    "status": "En Stock",
-    "thumbnail": "http://localhost:8080/images/1638839638169JM3-min.jpg"
+    "status": "CON STOCK",
+    "thumbnail": "1638839711257chomba-loreto.jpg"
   },
   {
     "id": 2,
-    "title": "Buzo",
-    "Colegio": " Nuestra Señora de Loreto",
-    "price": "1599",
-    "stock": "10",
-    "status": "En Stock",
-    "thumbnail": "http://localhost:8080/images/1638839672403B-NSL.jpg"
+    "title": "Pollera",
+    "Codigo": " 01 - Jesus Maria",
+    "price": "1999",
+    "stock": "5",
+    "status": "EN FALTA",
+    "thumbnail": "1637818418278JM3-min.jpg"
   },
   {
     "id": 3,
-    "title": "Chomba",
-    "Colegio": " Nuestra Señora de Loreto",
+    "title": "Pollera",
+    "Codigo": " 01 - Jesus Maria",
     "price": "1999",
-    "stock": "-5",
+    "stock": "5",
     "status": "EN FALTA",
-    "thumbnail": "http://localhost:8080/images/1638839711257chomba-loreto.jpg"
+    "thumbnail": "1637818418278JM3-min.jpg"
   },
   {
-    "id": 4,
-    "title": "chomba",
-    "Colegio": " Jesus Maria",
+    "id": 5,
+    "title": "Pollera",
+    "Codigo": " 01 - Jesus Maria",
     "price": "1999",
-    "stock": "1",
-    "status": "En Stock",
-    "thumbnail": "http://localhost:8080/images/1638839750339Chomba-JM.jpg"
+    "stock": "5",
+    "status": "EN FALTA",
+    "thumbnail": "1637818418278JM3-min.jpg"
   }
 ]
