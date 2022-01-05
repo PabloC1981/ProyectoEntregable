@@ -6,7 +6,11 @@
         "id": 1,
         "title": "Pollera",
         "price": "1599",
-        "cantidad": 8
+        "cantidad": 18
+      },
+      {
+        "id": 2,
+        "cantidad": 10
       }
     ]
   },
@@ -35,18 +39,6 @@
         "title": "Pollera",
         "price": "1599",
         "cantidad": 20
-      },
-      {
-        "id": 4,
-        "cantidad": 2
-      },
-      {
-        "id": 5,
-        "cantidad": 2
-      },
-      {
-        "id": 3,
-        "cantidad": 2
       }
     ]
   },

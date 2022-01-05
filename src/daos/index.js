@@ -2,7 +2,7 @@
 let product;
 let carrito;
 let users;
-let persistence = "mongo";
+let persistence = "firebase";
 
 switch(persistence){
     case "fileSystem":
@@ -21,7 +21,14 @@ switch(persistence){
         product = new productsMongo();
         carrito = new carsMongo();
         break;
+    case "firebase":
+        const {default:productsFirebase} = await import('./productos/productsFirebase.js'); 
+        const {default:carsFirebase} = await import('./carrito/carsFirebase.js')
+    
+        product = new productsFirebase();
+        carrito = new carsFirebase();
+        break;    
 
     default:
 }
-export {product,carrito,users}
+export {product,carrito,users, persistence}

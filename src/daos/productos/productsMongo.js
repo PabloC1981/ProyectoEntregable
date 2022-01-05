@@ -20,7 +20,6 @@ export default class productsMongo extends ContainerMongo{
             stock:{
                 type:Number,
                 required:true,
-                unique:true
             },
             status:{
                 type:String,
