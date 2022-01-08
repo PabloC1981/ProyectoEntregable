@@ -11,7 +11,7 @@ import __dirname from './utils.js';
 import { Server } from 'socket.io';
 import { authAdmin } from './utils.js';
 import { product } from './daos/index.js';
-//import { generate } from './utils.js';
+import { generate } from './utils.js';
 
 const app = express();
 const PORT = process.env.PORT|| 8080;
@@ -41,6 +41,14 @@ app.use(express.static(__dirname+'/public'));
 app.use('/api/productos',prodRouter); 
 app.use('/api/users',usersRouter);
 app.use('/api/carrito',carritoRouter);
+//////////
+//FaKeR///
+//////////
+app.get('/api/productos-test',(req,res)=>{
+    let cant = req.query.cant?parseInt(req.query.cant):10;
+    let products= generate(5)
+    res.send({product:products})
+})
 
 //mIDDLEWARE PARA SUBIR Y VALIDAR SI NO SE SUBIO ARCHIVOS el single es para un unico archivo//si quiero acceder a mas archivos . array
 app.post('/api/uploadfile',upload.fields([
@@ -67,12 +75,16 @@ app.get('/view/productos',authAdmin,(req,res)=>{
         res.render('productos',preparedObject) //mostramos la vista que se armó // segundo argumentos el producto que se armo
     })
 })
+//////////
 //FaKeR///
-// app.get('/test',(req,res)=>{
-//     let products = generate()
-//     res.send({product:products})
-// })
-//socket
+//////////
+app.get('api/productos-test',(req,res)=>{
+    let products = generate()
+    res.send({product:products})
+})
+//////////
+//socket//
+/////////
 io.on('connection', async socket=>{
     console.log(`El socket ${socket.id} se ha conectado`)
     let prods = await product.getAll();
