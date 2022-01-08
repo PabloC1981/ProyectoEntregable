@@ -11,7 +11,7 @@ import Message from './services/MessageSocket.js';
 import __dirname from './utils.js';
 import { Server } from 'socket.io';
 import { authAdmin } from './utils.js';
-
+import { generate } from './utils.js';
 
 
 const app = express();
@@ -42,6 +42,17 @@ app.use(express.static(__dirname+'/public'));
 app.use('/api/productos',prodRouter); 
 app.use('/api/users',usersRouter);
 app.use('/api/carrito',carritoRouter);
+///////////////
+////FaKer//////
+//////////////
+app.get('/api/productos-test',(req,res)=>{
+    let cant = req.query.cant?parseInt(req.query.cant):10;
+    let product = generate(cant);
+    res.send({product:product}) 
+} )
+///////////////
+////FaKer//////
+//////////////
 
 //mIDDLEWARE PARA SUBIR Y VALIDAR SI NO SE SUBIO ARCHIVOS el single es para un unico archivo//si quiero acceder a mas archivos . array
 app.post('/api/uploadfile',upload.fields([
