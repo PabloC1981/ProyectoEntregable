@@ -1,10 +1,10 @@
 import express from 'express';
-import ContenedorCarrito from '../contenedores/contenedorCarrito.js';
+//import ContenedorCarrito from '../contenedores/contenedorCarrito.js';
 import upload from '../services/upload.js';
 import { carrito , persistence } from '../daos/index.js';
 
 const router = express.Router();
-const contenedor = new ContenedorCarrito();
+//const contenedor = new ContenedorCarrito();
 
 //GET: '/:id/productos' - Me permite listar todos los productos guardados en el carrito
 router.get('/:id/productos', (req,res)=>{
@@ -28,7 +28,7 @@ router.post('/',(req,res)=>{
     })
 })
 //POST: '/:id/productos' - Para incorporar productos al carrito por su id de producto
-router.post('/:id/productos',(req,res)=>{
+router.post('/:id/productos',upload.any(),(req,res)=>{
     let id
     if(persistence === "fileSystem"){
         id = parseInt(req.params.id)

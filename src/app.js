@@ -1,8 +1,8 @@
 import express from 'express';
 import {engine} from 'express-handlebars'; 
 import cors from 'cors';      
-import ContenedorProductos from './contenedores/contenedorDeProductos.js';
-import ContenedorCarrito from './contenedores/contenedorCarrito.js';
+//import ContenedorProductos from './contenedores/contenedorDeProductos.js';
+//import ContenedorCarrito from './contenedores/contenedorCarrito.js';
 import carritoRouter from './routes/carrito.js'
 import prodRouter from './routes/productos.js'
 import usersRouter from './routes/users.js'
@@ -10,12 +10,13 @@ import upload from './services/upload.js';
 import __dirname from './utils.js';
 import { Server } from 'socket.io';
 import { authAdmin } from './utils.js';
-
+import { product } from './daos/index.js';
+//import { generate } from './utils.js';
 
 const app = express();
 const PORT = process.env.PORT|| 8080;
 
-const contenedor = new ContenedorProductos();
+//const contenedor = new ContenedorProductos();
 
 
 const server = app.listen(PORT,()=>{
@@ -58,7 +59,7 @@ app.post('/api/uploadfile',upload.fields([
     res.send(files);
 })
 app.get('/view/productos',authAdmin,(req,res)=>{
-    contenedor.getAllProductos().then(result=>{
+    product.getAll().then(result=>{
         let info = result.payload; //recojo informacion para mostrar a la vista
         let preparedObject ={  //se prepara la informacion para mostrar
             productos : info  // productos es el mismo nombre que esta en producto.hbs
@@ -66,11 +67,15 @@ app.get('/view/productos',authAdmin,(req,res)=>{
         res.render('productos',preparedObject) //mostramos la vista que se armó // segundo argumentos el producto que se armo
     })
 })
-
+//FaKeR///
+// app.get('/test',(req,res)=>{
+//     let products = generate()
+//     res.send({product:products})
+// })
 //socket
 io.on('connection', async socket=>{
     console.log(`El socket ${socket.id} se ha conectado`)
-    let prods = await contenedor.getAllProductos();
+    let prods = await product.getAll();
     socket.emit('updateProd',prods);
 
 })

@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+//import faker from 'faker';
 
 const filename= fileURLToPath(import.meta.url);
 const __dirname = dirname(filename);
@@ -9,6 +10,21 @@ export const authAdmin = (req,res,next)=>{
     else next(); 
 }
 export default __dirname;
+
+// export const generate = () =>{
+//     let product=[];
+//     for(let i = 1 ; i=5 ; i++ ){
+//         product.push({
+//             id :faker.id.id(),
+//             sku : faker.sku.sku(),
+//             title : faker.title.title(),
+//             price : faker.price.price(),
+//             stock : faker.status.stock(),
+//             thumbnail : faker.thumbnail.avatar()
+//         })
+//     }
+//     return product
+// }  
 
 
 /*function ConfigId(length){

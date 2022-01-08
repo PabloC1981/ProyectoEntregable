@@ -9,6 +9,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-handlebars": "^6.0.1",
+    "faker": "^6.6.6",
     "firebase-admin": "^9.12.0",
     "knex": "^0.95.10",
     "mongodb": "^3.6.11",

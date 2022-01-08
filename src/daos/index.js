@@ -2,7 +2,7 @@
 let product;
 let carrito;
 let users;
-let persistence = "firebase";
+let persistence = "mongo";
 
 switch(persistence){
     case "fileSystem":

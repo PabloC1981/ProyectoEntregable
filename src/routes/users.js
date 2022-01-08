@@ -1,9 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import ContenedorProductos from '../contenedores/contenedorDeProductos.js';
+//import ContenedorProductos from '../contenedores/contenedorDeProductos.js';
 import { users } from '../daos/index.js';
 
-const contenedor = new ContenedorProductos()
+//const contenedor = new ContenedorProductos()
 
 router.use((req,res,next)=>{
     let timestamp = Date.now();

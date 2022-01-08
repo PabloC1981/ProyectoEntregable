@@ -1,7 +1,7 @@
-import ContainerFs from "../../contenedores/ContainerFs.js";
+// import ContainerFs from "../../contenedores/ContainerFs.js";
 
-export default class usersFs extends ContainerFs{
-    constructor(){
-        super('users.txt')
-    }
-}
+// export default class usersFs extends ContainerFs{
+//     constructor(){
+//         super('users.txt')
+//     }
+// }

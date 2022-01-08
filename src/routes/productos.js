@@ -1,12 +1,12 @@
 import express from 'express';
-import ContenedorProductos from '../contenedores/contenedorDeProductos.js';
+//import ContenedorProductos from '../contenedores/contenedorDeProductos.js';
 import upload from '../services/upload.js';
 import { io } from '../app.js';
 import { product, persistence } from '../daos/index.js';
 
 
 const router = express.Router();
-const contenedor = new ContenedorProductos()
+//const contenedor = new ContenedorProductos()
 
 router.get('/', (req,res)=>{
     product.getAll().then(result=>{   
@@ -39,6 +39,7 @@ router.post('/',upload.single('image'),(req,res)=>{
     }
     })
 })
+
 router.put('/:pid',(req,res)=>{
     let id
     let body
