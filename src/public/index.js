@@ -69,6 +69,8 @@ socket.on('messagelog',data=>{
     
 })
 
+
+
 /*document.addEventListener('submit', event=>{
     event.preventDefault();
     let form = document.getElementById('productoForm');

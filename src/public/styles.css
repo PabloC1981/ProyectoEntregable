@@ -86,3 +86,16 @@
     margin:10px 5px;
     border-radius:10px;
 }
+  .producto-chat{
+    width:300px;
+    height:auto;
+    padding:15px 10px;
+    border:1px solid black;
+    margin:10px 5px;
+    border-radius:10px;
+    text-align: center;
+    color: blue;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: bold; 
+  }

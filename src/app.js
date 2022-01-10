@@ -12,6 +12,7 @@ import { Server } from 'socket.io';
 import { authAdmin } from './utils.js';
 import { product } from './daos/index.js';
 import { generate } from './utils.js';
+import chatMongo from './daos/chat/chatMongo.js';
 
 const app = express();
 const PORT = process.env.PORT|| 8080;
@@ -96,16 +97,22 @@ io.on('connection', async socket=>{
 let messages = [];
 
 
-io.on('connection',socket=>{
+io.on('connection', socket=>{
     console.log('Cliente conectado')
+
+    // let msgold = await chatMongo.find();
+    // socket.emit ('load old msg', msgold);
+
     socket.emit('messagelog',messages);
     //socket.emit('welcome','Bienvenido a Lavoro',)
-    socket.on('message',data =>{
-        messages.push(data)
+    socket.on('message', data =>{
+        messages.push(data);
+        
         io.emit('messagelog',messages);
     })
-
+    
 })
+
 app.use(function(req, res){
     res.status(404).send({ 404: "No encontrado" });
 });
