@@ -12,7 +12,7 @@ import { Server } from 'socket.io';
 import { authAdmin } from './utils.js';
 import { product } from './daos/index.js';
 import { generate } from './utils.js';
-import chatMongo from './daos/chat/chatMongo.js';
+import { chats } from './daos/index.js'
 
 const app = express();
 const PORT = process.env.PORT|| 8080;
@@ -42,14 +42,7 @@ app.use(express.static(__dirname+'/public'));
 app.use('/api/productos',prodRouter); 
 app.use('/api/users',usersRouter);
 app.use('/api/carrito',carritoRouter);
-//////////
-//FaKeR///
-//////////
-app.get('/api/productos-test',(req,res)=>{
-    let cant = req.query.cant?parseInt(req.query.cant):10;
-    let products= generate(5)
-    res.send({product:products})
-})
+
 
 //mIDDLEWARE PARA SUBIR Y VALIDAR SI NO SE SUBIO ARCHIVOS el single es para un unico archivo//si quiero acceder a mas archivos . array
 app.post('/api/uploadfile',upload.fields([
@@ -79,8 +72,9 @@ app.get('/view/productos',authAdmin,(req,res)=>{
 //////////
 //FaKeR///
 //////////
-app.get('api/productos-test',(req,res)=>{
-    let products = generate()
+app.get('/api/productos-test',(req,res)=>{
+    let cant = req.query.cant?parseInt(req.query.cant):10;
+    let products= generate(cant)
     res.send({product:products})
 })
 //////////
@@ -100,13 +94,16 @@ let messages = [];
 io.on('connection', socket=>{
     console.log('Cliente conectado')
 
-    // let msgold = await chatMongo.find();
-    // socket.emit ('load old msg', msgold);
-
     socket.emit('messagelog',messages);
-    //socket.emit('welcome','Bienvenido a Lavoro',)
-    socket.on('message', data =>{
+   
+    socket.on('message',  data =>{
         messages.push(data);
+        chats.register({id:socket.user,name:socket.name,last_name:socket.last_name,age:socket.age,alias:socket.alias,avatar:socket.avatar,messsage:socket.messages }).then(result=>{
+            console.log(result)
+            console.log(data) 
+            res.send(result)
+            
+        })
         
         io.emit('messagelog',messages);
     })

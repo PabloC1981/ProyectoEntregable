@@ -1,7 +1,10 @@
+
 //archivo gestor de daos//
 let product;
 let carrito;
 let users;
+let chats;
+
 let persistence = "mongo";
 
 switch(persistence){
@@ -17,9 +20,11 @@ switch(persistence){
     case "mongo":
         const {default:productsMongo} = await import('./productos/productsMongo.js'); 
         const {default:carsMongo} = await import('./carrito/carsMongo.js')
+        const {default:chatMongo} = await import('./chat/chatMongo.js')
 
         product = new productsMongo();
         carrito = new carsMongo();
+        chats = new chatMongo();
         break;
     case "firebase":
         const {default:productsFirebase} = await import('./productos/productsFirebase.js'); 
@@ -31,4 +36,4 @@ switch(persistence){
 
     default:
 }
-export {product,carrito,users, persistence}
+export {product,carrito,users,chats, persistence}

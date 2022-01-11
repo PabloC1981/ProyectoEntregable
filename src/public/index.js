@@ -1,3 +1,4 @@
+
 const socket = io();
 //---------------------------IMPLEMENTACION DE EVENTOS DE SOCKET --------------------------------------
 socket.on('updateProd',data=>{
