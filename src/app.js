@@ -10,9 +10,9 @@ import upload from './services/upload.js';
 import __dirname from './utils.js';
 import { Server } from 'socket.io';
 import { authAdmin } from './utils.js';
-import { product } from './daos/index.js';
+import { product , chats } from './daos/index.js';
 import { generate } from './utils.js';
-import { chats } from './daos/index.js'
+
 
 const app = express();
 const PORT = process.env.PORT|| 8080;
@@ -93,21 +93,34 @@ let messages = [];
 
 io.on('connection', socket=>{
     console.log('Cliente conectado')
-
+    socket.on('message',data=>{
+        console.log(data)
+    
+    })
+});
+io.on('connection', socket=>{
     socket.emit('messagelog',messages);
-   
+
     socket.on('message',  data =>{
-        messages.push(data);
-        chats.register({id:socket.user,name:socket.name,last_name:socket.last_name,age:socket.age,alias:socket.alias,avatar:socket.avatar,messsage:socket.messages }).then(result=>{
+        messages.push({id:socket.id,message:data});
+        chats.register({author:{user:data.user,id:data.id},message:data.message}).then(result=>{
+            
+         res.send(result)
             console.log(result)
             console.log(data) 
-            res.send(result)
-            
         })
         
         io.emit('messagelog',messages);
     })
     
+})
+/////////////
+//Normalizr//
+/////////////
+app.get('/norm',(req, res)=>{
+    chats.getNormalizChats().then(result=>{
+        res.send(result)
+    })
 })
 
 app.use(function(req, res){

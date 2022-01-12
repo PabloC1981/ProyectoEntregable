@@ -49,22 +49,35 @@ document.getElementById("image").onchange = (e)=>{
 //ChatLaboro
 let input = document.getElementById('mensaje');
 let user = document.getElementById('user')
+let email = document.getElementById('email')
+
+function validarEmail(em){
+    var expReg= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+    var esValido= expReg.test(em);
+    return esValido;
+}   
 
 input.addEventListener('keyup',(e)=>{
     if(e.key==="Enter"){
         if(e.target.value){
+            if (user.value==='') {
+                return alert('Coloca el Usuario!')
+            }
+            else if(email.value===''){
+                    return alert('Es obligatorio el mail!')
+                }
+                else if (validarEmail(email.value)!= true) {
+                    return alert('verifica tu correo por favor')    
+                }
             socket.emit('message',{user:user.value,message:e.target.value});
             document.getElementById("mensaje").value="";
         } 
     }
 })
-socket.on('welcome',data=>{
-    alert(data);
-})
 socket.on('messagelog',data=>{
     let p = document.getElementById('log')
-    let mensajes = data.map(message=>{
-        return `<div><span>${message.user} dice: ${message.message}</span></div>`
+    let mensajes = data.map(msg=>{
+        return `<div><span>${msg.message.user}</b>dice: </b>${msg.message.message}</b></span></div>`
     }).join('');
     p.innerHTML=mensajes;
     

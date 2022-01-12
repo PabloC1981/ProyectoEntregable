@@ -28,7 +28,7 @@ router.post('/',upload.single('image'),(req,res)=>{
     let producto = req.body;
     let file = req.file
     console.log(producto)
-    producto.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file.filename;
+    //producto.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file.filename;
     product.register(producto).then(result =>{
     res.send(result)
     if(result.status==="success"){

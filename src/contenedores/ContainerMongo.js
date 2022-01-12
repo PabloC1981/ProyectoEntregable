@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import config from '../config.js'
+import { normalize,schema } from "normalizr";
 
 mongoose.connect(config.mongo.baseUrl,{useNewUrlParser: true,useUnifiedTopology: true,})
 
@@ -93,5 +94,27 @@ export default class MongoContainter{
             return {status:"error",message:"Error al intentar borrar el Carrito: "+error}
         }
     }
+    /////////////
+//Normalizr//
+////////////
+getNormalizChats = async ()=>{
+    try {
+        let documents = await this.collection.find()
+        console.log(documents)
+        const users = new schema.Entity('users');
+        const message = new schema.Entity('message');
+        const posts =new schema.Entity('chats',{
+            author:users,
+            message:[message]
+        });
+
+        const normalizedData = normalize(documents, posts)
+        console.log(JSON.stringify(normalizedData,null,2))
+        return {status:"success", payload:documents}
+
+    } catch (error) {
+        return {status:"error", message:"Imposible Normalizar"}
+    }
 }
-///////////
+}
+
