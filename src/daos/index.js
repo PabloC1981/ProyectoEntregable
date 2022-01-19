@@ -10,7 +10,7 @@ let persistence = "mongo";
 switch(persistence){
     case "fileSystem":
         const {default:productsFs} = await import('./productos/productsFs.js');
-        const {default:usersFs} = await import('./users/usersFs.js') 
+        const {default:usersFs} = await import('./users/usersMongo.js') 
         const {default:carritoFs} = await import('./carrito/carritoFs.js')
     
         product = new productsFs();
@@ -21,10 +21,13 @@ switch(persistence){
         const {default:productsMongo} = await import('./productos/productsMongo.js'); 
         const {default:carsMongo} = await import('./carrito/carsMongo.js')
         const {default:chatMongo} = await import('./chat/chatMongo.js')
+        const {default:usersMongo} = await import('./users/usersMongo.js')
 
         product = new productsMongo();
         carrito = new carsMongo();
         chats = new chatMongo();
+        users = new usersMongo();
+
         break;
     case "firebase":
         const {default:productsFirebase} = await import('./productos/productsFirebase.js'); 

@@ -10,19 +10,24 @@ import upload from './services/upload.js';
 import __dirname from './utils.js';
 import { Server } from 'socket.io';
 import { authAdmin } from './utils.js';
-import { product , chats } from './daos/index.js';
+import { product , chats, users } from './daos/index.js';
 import { generate } from './utils.js';
-
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 const app = express();
 const PORT = process.env.PORT|| 8080;
-
-//const contenedor = new ContenedorProductos();
-
-
 const server = app.listen(PORT,()=>{
     console.log("Servidor escuchando en: 8080")
 })
+
+const baseSession = (session({
+    store:MongoStore.create({mongoUrl:"mongodb+srv://pablo:pascual1@lavoro.elux2.mongodb.net/session?retryWrites=true&w=majority"}),
+    resave:false,
+    saveUninitialized:false,
+    secret:"loginLavoro"
+}))
+
 export const io = new Server(server);
 app.engine('handlebars',engine())//para definir el motor  la plantilla de HANDELBARS
 app.set('views',__dirname+'/views') //Cuando quiera renderizar los productos,a que carpeta accedo?/views
@@ -42,6 +47,7 @@ app.use(express.static(__dirname+'/public'));
 app.use('/api/productos',prodRouter); 
 app.use('/api/users',usersRouter);
 app.use('/api/carrito',carritoRouter);
+app.use(baseSession);
 
 
 //mIDDLEWARE PARA SUBIR Y VALIDAR SI NO SE SUBIO ARCHIVOS el single es para un unico archivo//si quiero acceder a mas archivos . array
