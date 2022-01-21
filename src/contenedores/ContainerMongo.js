@@ -37,6 +37,18 @@ export default class MongoContainter{
             return {status:"error",message:"Error al obtener el documento: "}
         }
     }
+    getBy = async (atributo)=>{
+        try {
+            let document = await this.collection.find({'email':atributo})
+            if (document) {
+                return document
+            }else if(!document){
+                return {status:404, message:"not found"}
+            }
+        } catch (error) {
+            return {status:"error", message:"No es que no lo encuentre, es que hay algo que debes revisar en el codigo!Mira:"+error}
+        }
+    }
     update = async(id,body) =>{
         try{
             let docs = await this.collection.findById({ '_id': id }, { '__v': 0 });

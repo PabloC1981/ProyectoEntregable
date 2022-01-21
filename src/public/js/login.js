@@ -1,13 +1,8 @@
-//---------------------------IMPLEMENTACION REGISTER --------------------------------------
-let form  = document.getElementById("registerForm");
+let form = document.getElementById('loginForm');
 form.addEventListener('submit',function(event){
     event.preventDefault();
     let info = new FormData(form);
-    let sendObject ={
-        first_name:info.get('first_name'),
-        last_name:info.get('last_name'),
-        age:info.get('age'),
-        username:info.get('username'),
+    let sendObject={
         email:info.get('email'),
         password:info.get('password')
     }
@@ -18,7 +13,8 @@ form.addEventListener('submit',function(event){
             'Content-Type':'application/json'
         }
     }).then(result=>result.json()).then(json=>{
-        form.reset();
-        alert('Usuario Registrado');
+        location.replace('../pages/chat.html')
+        console.log(json);
     })
 })
+

@@ -12,8 +12,7 @@ import { Server } from 'socket.io';
 import { authAdmin } from './utils.js';
 import { product , chats, users } from './daos/index.js';
 import { generate } from './utils.js';
-import session from "express-session";
-import MongoStore from "connect-mongo";
+import ios from 'socket.io-express-session';
 
 const app = express();
 const PORT = process.env.PORT|| 8080;
@@ -21,12 +20,7 @@ const server = app.listen(PORT,()=>{
     console.log("Servidor escuchando en: 8080")
 })
 
-const baseSession = (session({
-    store:MongoStore.create({mongoUrl:"mongodb+srv://pablo:pascual1@lavoro.elux2.mongodb.net/session?retryWrites=true&w=majority"}),
-    resave:false,
-    saveUninitialized:false,
-    secret:"loginLavoro"
-}))
+
 
 export const io = new Server(server);
 app.engine('handlebars',engine())//para definir el motor  la plantilla de HANDELBARS
@@ -47,8 +41,7 @@ app.use(express.static(__dirname+'/public'));
 app.use('/api/productos',prodRouter); 
 app.use('/api/users',usersRouter);
 app.use('/api/carrito',carritoRouter);
-app.use(baseSession);
-
+//io.use(ios(baseSession));
 
 //mIDDLEWARE PARA SUBIR Y VALIDAR SI NO SE SUBIO ARCHIVOS el single es para un unico archivo//si quiero acceder a mas archivos . array
 app.post('/api/uploadfile',upload.fields([
@@ -94,6 +87,9 @@ io.on('connection', async socket=>{
 })
 
 //ChatLaboro
+// app.get('/currentUser',(req,res)=>{
+//     res.send(req.session.users)
+// }) 
 let messages = [];
 
 
@@ -105,9 +101,17 @@ io.on('connection', socket=>{
     })
 });
 io.on('connection', socket=>{
+    socket.broadcast.emit('thridConnection', 'Alguien se ha conectado al chat')
     socket.emit('messagelog',messages);
+    socket.on('message', async data =>{
+        const user = await users.get(socket.handshake.session.user.username)
+        let message ={
+            user:user._id,
+            text:data.message
+        }
+        await messageService.save(message);
+        const messages = await chats.getAll();
 
-    socket.on('message',  data =>{
         messages.push({id:socket.id,message:data});
         chats.register({author:{user:data.user,id:data.id},message:data.message}).then(result=>{
             
@@ -132,3 +136,4 @@ app.get('/norm',(req, res)=>{
 app.use(function(req, res){
     res.status(404).send({ 404: "No encontrado" });
 });
+

@@ -58,31 +58,31 @@ function validarEmail(em){
     return esValido;
 }   
 
-input.addEventListener('keyup',(e)=>{
-    if(e.key==="Enter"){
-        if(e.target.value){
-            if (user.value==='') {
-                return alert('Coloca el Usuario!')
-            }
-            else if(email.value===''){
-                    return alert('Es obligatorio el mail!')
-                }
-                else if (validarEmail(email.value)!= true) {
-                    return alert('verifica tu correo por favor')    
-                }
-            socket.emit('message',{user:user.value,message:e.target.value});
-            document.getElementById("mensaje").value="";
-        } 
-    }
-})
-socket.on('messagelog',data=>{
-    let p = document.getElementById('log')
-    let mensajes = data.map(msg=>{
-        return `<div><span>${msg.message.user}</b>dice: </b>${msg.message.message}</b></span></div>`
-    }).join('');
-    p.innerHTML=mensajes;
+// input.addEventListener('keyup',(e)=>{
+//     if(e.key==="Enter"){
+//         if(e.target.value){
+//             if (user.value==='') {
+//                 return alert('Coloca el Usuario!')
+//             }
+//             else if(email.value===''){
+//                     return alert('Es obligatorio el mail!')
+//                 }
+//                 else if (validarEmail(email.value)!= true) {
+//                     return alert('verifica tu correo por favor')    
+//                 }
+//             socket.emit('message',{user:user.value,message:e.target.value});
+//             document.getElementById("mensaje").value="";
+//         } 
+//     }
+// })
+// socket.on('messagelog',data=>{
+//     let p = document.getElementById('log')
+//     let mensajes = data.map(msg=>{
+//         return `<div><span>${msg.message.user}</b>dice: </b>${msg.message.message}</b></span></div>`
+//     }).join('');
+//     p.innerHTML=mensajes;
     
-})
+// })
 
 
 
