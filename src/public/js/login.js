@@ -6,7 +6,8 @@ form.addEventListener('submit',function(event){
         email:info.get('email'),
         password:info.get('password')
     }
-    fetch('/',{
+    console.log(sendObject)
+    fetch('/api/users/login',{
         method:"POST",
         body:JSON.stringify(sendObject),
         headers:{

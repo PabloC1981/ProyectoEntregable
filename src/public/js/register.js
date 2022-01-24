@@ -11,7 +11,7 @@ form.addEventListener('submit',function(event){
         email:info.get('email'),
         password:info.get('password')
     }
-    fetch('/',{
+    fetch('/api/users',{
         method:"POST",
         body:JSON.stringify(sendObject),
         headers:{
@@ -20,5 +20,6 @@ form.addEventListener('submit',function(event){
     }).then(result=>result.json()).then(json=>{
         form.reset();
         alert('Usuario Registrado');
+        location.replace('../pages/login.html')
     })
 })

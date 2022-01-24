@@ -62,17 +62,20 @@ router.delete('/:uid',(req,res)=>{
 /////////
 //Login//
 ////////
-router.post('/login', (req,res)=>{
+router.post('/login', async (req,res)=>{
     let {email,password} = req.body;
+    console.log(req.body)
     if(!email||!password) return res.status(400).send({error:"Incomplete fields"})
-    const user = users.getBy({email:email});//Obtengo al usuario ya de la DB
+    const user = await  users.getBy(email);//Obtengo al usuario ya de la DB
+    console.log(user)
     if(!user) return res.status(404).send({error:"User not found"});
-    if(user.password!==password) return res.status(400).send({error:"Tu pasword no es el correcto"});
+    if(user[0].password!==password) return res.status(400).send({error:"Tu pasword no es el correcto,verificalo por favor"});
     //Hasta aquí, sabemos que va a haber usuario y que cumple su contraseña.
     req.session.user={
-        username:user.username,
-        email:user.email
+        username:user[0].username,
+        email:user[0].email
     }
+    console.log(req.session.user)
     res.send({status:"Logeado"})
 })
 
